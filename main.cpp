@@ -49,6 +49,34 @@ void DisplayTheGameField(vector<vector<string> > gameField)
   cout << "\n";
 }
 
+bool CheckIfFull(vector<vector<string> > gameField) {
+  bool result = true;
+  for (int i = 0; i < gameField.size(); ++i)
+  {
+    for (int j = 0; j < gameField[i].size(); ++j)
+    {
+      if (gameField[i][j] == " ") {
+        result = false;
+      }
+    }
+  }
+  return result;
+}
+
+bool CheckWinnerExistance(vector<vector<string> > gameField) {
+  bool result = true;
+  return result;
+}
+
+string DetermineWinner(vector<vector<string> > gameField) {
+  string result = " ";
+  return result;
+}
+
+void AddTheStep(vector<vector<string> > gameField, int numberOfThColumn, string letter) {
+
+}
+
 int main()
 {
   string redName;
@@ -82,4 +110,19 @@ int main()
   cin >> yellowName;
   Space(2);
   DisplayTheGameField(mainField);
+  // the game loop
+  int order = 0;
+  while (CheckIfFull(mainField) == false) {
+    if (order % 2 == 0) {
+      cout << redName + " please enter the number of the column (0-6)" << endl;
+      ++order;
+    }
+    else {
+      cout << yellowName + " please enter the number of the column (0-6)" << endl;
+      ++order;
+    }
+    string response;
+    cin >> response;
+    CheckIfQuit(response);
+  }
 }

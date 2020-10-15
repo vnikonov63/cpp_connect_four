@@ -36,11 +36,19 @@ void Space(int number)
 
 void DisplayTheGameField(vector<vector<string> > gameField)
 {
-  for (int i = 0; i < gameField.size(); ++i)
+  for (int i = gameField.size() - 1; i >= 0; --i)
   {
     cout << "|";
     for (int j = 0; j < gameField[i].size(); ++j)
     {
+      if (gameField[i][j] == "Y") {
+        cout << YELLOW << gameField[i][j] << RESET << "|";
+        continue;
+      }
+      if (gameField[i][j] == "R") {
+        cout << RED << gameField[i][j] << RESET << "|";
+        continue;
+      }
       cout << gameField[i][j] + "|";
     }
     cout << "\n";
@@ -48,6 +56,7 @@ void DisplayTheGameField(vector<vector<string> > gameField)
   cout << "---------------";
   cout << "\n";
 }
+
 
 bool CheckIfFull(vector<vector<string> > gameField) {
   bool result = true;
@@ -63,9 +72,34 @@ bool CheckIfFull(vector<vector<string> > gameField) {
   return result;
 }
 
-bool CheckWinnerExistance(vector<vector<string> > gameField) {
-  bool result = true;
+bool CheckLine(vector<string> gameLine) {
+  int sameCount = 0;
+  for (int i = 0; i < gameLine.size() - 1; ++i) {
+    if (gameLine[i] == gameLine[i + 1] && gameLine[i] != " ") {
+      ++sameCount;
+    }
+    else {
+      sameCount = 0;
+    }
+    if (sameCount == 3) {
+      return true;
+    }
+  }
+  return false;
+}
+
+vector<vector<string> > TransposeAMatrix(vector<vector<string> > gameField) {
+  vector<vector<string> > result;
   return result;
+}
+
+bool CheckWinnerExistance(vector<vector<string> > gameField) {
+  for (int i = 0; i < gameField.size(); ++i) {
+    if (CheckLine(gameField[i])) {
+      return true;
+    }
+  }
+  return false;
 }
 
 string DetermineWinner(vector<vector<string> > gameField) {
@@ -124,7 +158,7 @@ int main()
   DisplayTheGameField(mainField);
   // the game loop
   int order = 0;
-  while (CheckIfFull(mainField) == false) {
+  while (CheckIfFull(mainField) == false && CheckWinnerExistance(mainField) == false) {
     string response;
     if (order % 2 == 0) {
       cout << redName + " please enter the number of the column (0-6)" << endl;
@@ -138,11 +172,27 @@ int main()
       cout << yellowName + " please enter the number of the column (0-6)" << endl;
       ++order;
       cin >> response;
-      int choice = stoi(response);
       CheckIfQuit(response);
+      int choice = stoi(response);
       mainField = AddTheStep(mainField, choice, "Y");
     }
     Space(1);
     DisplayTheGameField(mainField);
+    Space(15);
+  }
+  if (CheckIfFull(mainField)) {
+    Space(2);
+    cout << "Sorry, the game resuted in a draw" << endl;
+    return 0;
+  }
+  if ((order + 1) % 2 == 0) {
+    Space(2);
+    cout << redName + " has won, he was playing red" << endl;
+    return 0;
+  }
+  else {
+    Space(2);
+    cout << yellowName + " has won, he was playing yellow" << endl;
+    return 0;
   }
 }

@@ -73,8 +73,20 @@ string DetermineWinner(vector<vector<string> > gameField) {
   return result;
 }
 
-void AddTheStep(vector<vector<string> > gameField, int numberOfThColumn, string letter) {
+vector<vector<string> >AddTheStep(vector<vector<string> > gameField, int numberOfThColumn, string letter) {
+  int row = -1;
+  for (int i = 0; i < gameField.size(); ++i)
+  {
+    for (int j = 0; j < gameField[i].size(); ++j)
+    {
+      if (j == numberOfThColumn && gameField[i][j] != " ") {
+        row = i;
+      }
+    }
+  }
+  gameField[row + 1][numberOfThColumn] = letter;
 
+  return gameField;
 }
 
 int main()
@@ -113,16 +125,24 @@ int main()
   // the game loop
   int order = 0;
   while (CheckIfFull(mainField) == false) {
+    string response;
     if (order % 2 == 0) {
       cout << redName + " please enter the number of the column (0-6)" << endl;
       ++order;
+      cin >> response;
+      int choice = stoi(response);
+      CheckIfQuit(response);
+      mainField = AddTheStep(mainField, choice, "R");
     }
     else {
       cout << yellowName + " please enter the number of the column (0-6)" << endl;
       ++order;
+      cin >> response;
+      int choice = stoi(response);
+      CheckIfQuit(response);
+      mainField = AddTheStep(mainField, choice, "Y");
     }
-    string response;
-    cin >> response;
-    CheckIfQuit(response);
+    Space(1);
+    DisplayTheGameField(mainField);
   }
 }

@@ -147,6 +147,13 @@ bool CheckWinnerExistance(vector<vector<string> > gameField) {
       return true;
     }
   }
+
+  vector<vector<string> > diagonalMatrix = MatrixToArrayOfDiagonals(gameField);
+  for (int i = 0; i < diagonalMatrix.size(); ++i) {
+    if (CheckLine(diagonalMatrix[i])) {
+      return true;
+    }
+  }
   return false;
 }
 
@@ -222,15 +229,6 @@ int main()
     }
     Space(1);
     DisplayTheGameField(mainField);
-    vector<vector<string> > debug;
-    debug = MatrixToArrayOfDiagonals(mainField);
-    for (int i = 0; i < debug.size(); ++i) {
-      cout << "diagonal " << i << endl;
-      for (int j = 0; j < debug[i].size(); ++j) {
-        cout << debug[i][j];
-      }
-      cout << "\n";
-    }
     Space(15);
   }
   if (CheckIfFull(mainField)) {
@@ -249,3 +247,16 @@ int main()
     return 0;
   }
 }
+
+// Add this to debug the function, that is about storing all the diagonals of the matrix
+/*
+vector<vector<string> > debug;
+    debug = MatrixToArrayOfDiagonals(mainField);
+    for (int i = 0; i < debug.size(); ++i) {
+      cout << "diagonal " << i << endl;
+      for (int j = 0; j < debug[i].size(); ++j) {
+        cout << debug[i][j];
+      }
+      cout << "\n";
+    }
+*/

@@ -104,7 +104,35 @@ vector<vector<string> > TransposeAMatrix(vector<vector<string> > gameField) {
 
 vector<vector<string> > MatrixToArrayOfDiagonals(vector<vector<string> > gameField) {
   vector<vector<string> > result;
-  return result
+  for (int i = 0; i < gameField.size(); ++i) {
+    for (int j = 0; j < gameField[i].size(); ++j) {
+      vector<string> temp1;
+      vector<string> temp2;
+      if (i == 0 || j == 0) {
+        int tempI = i;
+        int tempJ = j;
+        while (tempI < gameField.size() && tempJ < gameField[i].size()) {
+          temp1.push_back(gameField[tempI][tempJ]);
+          tempI++;
+          tempJ++;
+        }
+        result.push_back(temp1);
+        tempI = i;
+        tempJ = j;
+        while (tempI < gameField.size() && tempJ >= 0) {
+          temp2.push_back(gameField[tempI][tempJ]);
+          tempI++;
+          tempJ--;
+        }
+        result.push_back(temp2);
+        //temp.push_back("1");
+      }
+      else {
+        continue;
+      }
+    }
+  }
+  return result;
 }
 
 bool CheckWinnerExistance(vector<vector<string> > gameField) {
@@ -194,6 +222,15 @@ int main()
     }
     Space(1);
     DisplayTheGameField(mainField);
+    vector<vector<string> > debug;
+    debug = MatrixToArrayOfDiagonals(mainField);
+    for (int i = 0; i < debug.size(); ++i) {
+      cout << "diagonal " << i << endl;
+      for (int j = 0; j < debug[i].size(); ++j) {
+        cout << debug[i][j];
+      }
+      cout << "\n";
+    }
     Space(15);
   }
   if (CheckIfFull(mainField)) {

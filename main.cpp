@@ -90,7 +90,21 @@ bool CheckLine(vector<string> gameLine) {
 
 vector<vector<string> > TransposeAMatrix(vector<vector<string> > gameField) {
   vector<vector<string> > result;
+  for (int i = 0; i < 7; ++i)
+  {
+    vector<string> tempResult;
+    for (int j = 0; j < 6; ++j)
+    {
+      tempResult.push_back(gameField[j][i]);
+    }
+    result.push_back(tempResult);
+  }
   return result;
+}
+
+vector<vector<string> > MatrixToArrayOfDiagonals(vector<vector<string> > gameField) {
+  vector<vector<string> > result;
+  return result
 }
 
 bool CheckWinnerExistance(vector<vector<string> > gameField) {
@@ -99,13 +113,15 @@ bool CheckWinnerExistance(vector<vector<string> > gameField) {
       return true;
     }
   }
+  vector<vector<string> > transposedMatrix = TransposeAMatrix(gameField);
+  for (int i = 0; i < transposedMatrix.size(); ++i) {
+    if (CheckLine(transposedMatrix[i])) {
+      return true;
+    }
+  }
   return false;
 }
 
-string DetermineWinner(vector<vector<string> > gameField) {
-  string result = " ";
-  return result;
-}
 
 vector<vector<string> >AddTheStep(vector<vector<string> > gameField, int numberOfThColumn, string letter) {
   int row = -1;
